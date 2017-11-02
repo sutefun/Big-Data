@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS visitdaily 
+( url STRING, ext STRING, status INT, hit INT)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ‘\t’
+LOCATION 'user/cloudera/b'
+
+select a.url, a.ext, a.hit from visitdaily as a where a.hit in 
+(select max(b.hit) from visitdaily as b where b.status=200 );
+
+select a.url, a.ext, a.hit from visitdaily as a where a.hit in 
+(select max(b.hit) from visitdaily as b where b.ext="jpg" );
+
